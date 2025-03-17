@@ -1,14 +1,15 @@
 #include "ladder.h"
+#include <cmath>
 
 void error(string word1, string word2, string msg) {
 	cerr << "Error: " << msg << word1 << " -> " << word2 << endl;
 }
 
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d) {
-	if (abs(str1.length() - str2.length()) > 1)
+	if (str1.length() != str2.length())
 		return false;
 	int difference = 0;
-	size_t = i, j = 0;
+	size_t i = 0, j = 0;
 	while (i < str1.length() && j < str2.length()) {
 		if (str1[i] != str2[i]) {
 			++difference;
