@@ -5,7 +5,17 @@ void error(string word1, string word2, string msg) {
 }
 
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d) {
-	
+	if (str1.length() != str2.length())
+		return false;
+	int difference = 0;
+	for (size_t i = 0; i < str1.length(); ++i) {
+		if (str1[i] != str2[i]) {
+			++difference;
+			if (difference > d)
+				return false;
+			}
+		}
+	return difference == d;
 }
 
 bool is_adjacent(const string& word1, const string& word2) {
@@ -22,9 +32,8 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
 		vector<string> ladder = ladder_queue.front();
 		ladder_queue.pop();
 		string last_word = ladder.back();
-		for (string word : word_list) {
+		for (const string& word : word_list) {
 			if (is_adjacent(last_word, word) && visited.find(word) == visited.end()) {
-				visited.insert(word);
 				vector<string> new_ladder = ladder;
 				new_ladder.push_back(word);
 				visited.insert(word);
@@ -37,7 +46,11 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
 }
 
 void load_words(set<string> & word_list, const string& file_name) {
-	ifstream infile(filename);
+	ifstream infile(file_name);
+	if (!infile) {
+		error("Unable to open fil", "e", ".");
+		return;
+	}
 	string word;
 	while (infile >> word)
 		word_list.insert(word);
@@ -45,13 +58,17 @@ void load_words(set<string> & word_list, const string& file_name) {
 
 void print_word_ladder(const vector<string>& ladder) {
 	for (size_t i = 0; i < ladder.size(); ++i) {
-		if (i != ladder.size() - 1) { cout << ladder[i] << " -> "; }
-		else { cout << ladder[i]; }
+		if (i != ladder.size() - 1) 
+			cout << ladder[i] << " -> ";
+		else 
+			cout << ladder[i];
+	}
+	cout << endl;
 }
 
 #define my_assert(e) { cout << #e << ((e) ? " passed" : " failed") << endl; }
 void verify_word_ladder() {
-	set<> word_list;
+	set<string> word_list;
 	load_words(word_list, "words.txt");
 
 	my_assert(generate_word_ladder("cat", "dog", word_list).size() == 4);

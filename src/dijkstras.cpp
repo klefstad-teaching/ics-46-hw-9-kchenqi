@@ -21,7 +21,7 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
 		int u = current.vertex;
 		if (visited[u]) continue;
 		visited[u] = true;
-		for (Edge neighbor : G[u]) {
+		for (const Edge& neighbor : G[u]) {
 			int v = neighbor.dst;
 			int weight = neighbor.weight;
 
