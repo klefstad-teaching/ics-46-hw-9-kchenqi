@@ -9,23 +9,25 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
 	if (str1.length() != str2.length())
 		return false;
 	int difference = 0;
-	size_t i = 0, j = 0;
-	while (i < str1.length() && j < str2.length()) {
-		if (str1[i] != str2[j]) {
+	size_t i = 0;
+	while (i < str1.length()) {
+		if (str1[i] != str2[i]) {
 			++difference;
-			if (difference > d)
-				return false;
-			if (str1.length() > str2.length())
-				++i;
-			else if (str1.length() < str2.length())
-				++j;
-			else
-				++i, ++j;
+				if (difference > d)
+					return false;
+		// 	if (str1.length() > str2.length())
+		// 		++i;
+		// 	else if (str1.length() < str2.length())
+		// 		++j;
+		// 	else
+		// 		++i, ++j;
+		// }
+		// else
+		// 	++i, ++j;
 		}
-		else
-			++i, ++j;
+		++i;
 	}
-	difference += (i < str1.length()) + (j < str2.length());
+	// difference += (i < str1.length()) + (j < str2.length());
 	return difference <= d;
 }
 
