@@ -1,8 +1,12 @@
 #include "dijkstras.h"
+#include <algorithm>
 
 struct Node {
 	int vertex;
 	int weight;
+	Node(int v, int w) : vertex(v), weight(w) {}
+    bool operator>(const Node& other) const {
+        return weight > other.weight;
 };
 
 vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& previous) {
@@ -10,10 +14,10 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
 	vector<int> distances(numVertices, INF);
 	vector<bool> visited(numVertices, false);
 	distances[source] = 0;
-	previous[source] = UNDEFINED;
+	previous[source] = -1;
 	
-	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq;
-	pq.push({source, 0});
+	priority_queue<Node, vector<Node>, greater<Node>> pq;
+	pq.push(Node{source, 0});
 
 	while(!pq.empty()) {
 		Node current = pq.top();

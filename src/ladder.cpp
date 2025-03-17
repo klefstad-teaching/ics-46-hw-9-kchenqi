@@ -48,7 +48,7 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
 void load_words(set<string> & word_list, const string& file_name) {
 	ifstream infile(file_name);
 	if (!infile) {
-		error("Unable to open fil", "e", ".");
+		error("Unable to open file.", " ", " ");
 		return;
 	}
 	string word;
