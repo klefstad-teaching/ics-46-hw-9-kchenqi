@@ -4,9 +4,9 @@
 struct Node {
 	int vertex;
 	int weight;
-	Node(int v, int w) : vertex(v), weight(w) {}
-    bool operator>(const Node& other) const {
+	bool operator>(const Node& other) const {
         return weight > other.weight;
+	}
 };
 
 vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& previous) {
@@ -32,7 +32,7 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
 			if (!visited[v] && distances[u] + weight < distances[v]) {
 				distances[v] = distances[u] + weight;
 				previous[v] = u;
-					pq.push({distances[v], v});
+				pq.push(Node{v, distances[v]});
 			}
 		}
 	}
