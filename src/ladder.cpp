@@ -6,28 +6,27 @@ void error(string word1, string word2, string msg) {
 }
 
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d) {
-	if (str1.length() != str2.length())
+	if (abs(static_cast<int>(str1.length() - str2.length())) > 1)
 		return false;
 	int difference = 0;
-	size_t i = 0;
-	while (i < str1.length()) {
-		if (str1[i] != str2[i]) {
+	size_t i = 0, j = 0;
+	while (i < str1.length() && j < str2.length()) {
+		if (str1[i] != str2[j]) {
 			++difference;
 				if (difference > d)
 					return false;
-		// 	if (str1.length() > str2.length())
-		// 		++i;
-		// 	else if (str1.length() < str2.length())
-		// 		++j;
-		// 	else
-		// 		++i, ++j;
-		// }
-		// else
-		// 	++i, ++j;
+			if (str1.length() > str2.length())
+				++i;
+			else if (str1.length() < str2.length())
+				++j;
+			else
+				++i, ++j;
 		}
-		++i;
+		else
+			++i, ++j;
 	}
-	// difference += (i < str1.length()) + (j < str2.length());
+	if (i < str1.length() || j < str2.length())
+		++difference;
 	return difference <= d;
 }
 
